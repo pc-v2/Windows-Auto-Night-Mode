@@ -41,22 +41,7 @@ namespace AutoDarkModeSvc.Handlers
             {
                 theme = (int)Theme.Dark;
             }
-            using var edgeKey = GetEdgeKey();
-            edgeKey.SetValue("Theme", theme, RegistryValueKind.DWord);
         }
-
-        public static bool EdgeUsesLightTheme()
-        {
-            //reverse dark and light for edge because Microsoft
-            using var key = GetEdgeKey();
-            var value = key.GetValue("Theme");
-            if ((int)value == (int)Theme.Dark)
-            {
-                return true;
-            }
-            return false;
-        }
-
         /// <summary>
         /// Sets the taskbar color prevalence
         /// </summary>

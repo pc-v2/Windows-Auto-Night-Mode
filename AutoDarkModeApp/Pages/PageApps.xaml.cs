@@ -33,17 +33,7 @@ namespace AutoDarkModeApp
         }
 
         //react to windows theme change
-        private void ThemeChange(object sender, EventArgs e)
-        {
-            if (SourceChord.FluentWPF.SystemTheme.AppTheme.Equals(SourceChord.FluentWPF.ApplicationTheme.Dark))
-            {
-                EdgyIcon.Source = new BitmapImage(new Uri(@"/Resources/Microsoft_Edge_Logo_White.png", UriKind.Relative));
-            }
-            else
-            {
-                EdgyIcon.Source = new BitmapImage(new Uri(@"/Resources/Microsoft_Edge_Logo.png", UriKind.Relative));
-            }
-        }
+        private void ThemeChange(object sender, EventArgs e){}
 
         private void UiHandler()
         {
@@ -61,7 +51,6 @@ namespace AutoDarkModeApp
                 AccentColorCheckBox.IsEnabled = false;
                 SystemComboBox.IsEnabled = false;
                 AppComboBox.IsEnabled = false;
-                EdgeComboBox.IsEnabled = false;
                 OfficeComboBox.IsEnabled = false;
                 CheckBoxOfficeWhiteTheme.IsEnabled = false;
             }
@@ -99,7 +88,6 @@ namespace AutoDarkModeApp
             //combobox
             AppComboBox.SelectedIndex = (int)builder.Config.AppsTheme;
             SystemComboBox.SelectedIndex = (int)builder.Config.SystemTheme;
-            EdgeComboBox.SelectedIndex = (int)builder.Config.EdgeTheme;
             if (builder.Config.Office.Enabled)
             {
                 OfficeComboBox.SelectedIndex = (int)builder.Config.Office.Mode;
@@ -174,45 +162,6 @@ namespace AutoDarkModeApp
             }
             RequestThemeSwitch();
         }
-
-        private void EdgeComboBox_DropDownClosed(object sender, EventArgs e)
-        {
-            if (EdgeComboBox.SelectedIndex.Equals(0))
-            {
-                builder.Config.EdgeTheme = Mode.Switch;
-            }
-
-            if (EdgeComboBox.SelectedIndex.Equals(1))
-            {
-                builder.Config.EdgeTheme = Mode.LightOnly;
-            }
-
-            if (EdgeComboBox.SelectedIndex.Equals(2))
-            {
-                builder.Config.EdgeTheme = Mode.DarkOnly;
-            }
-
-            if (EdgeComboBox.SelectedIndex.Equals(3))
-            {
-                builder.Config.EdgeTheme = Mode.Switch;
-            }
-            try
-            {
-                builder.Save();
-            }
-            catch (Exception ex)
-            {
-                ShowErrorMessage(ex);
-            }
-            RequestThemeSwitch();
-        }
-        private void DisableEdgeSwitch()
-        {
-            //does nothing for now
-            Properties.Settings.Default.EdgeThemeChange = 3;
-            EdgeComboBox.SelectedIndex = 3;
-        }
-
         private void AccentColorCheckBox_Click(object sender, RoutedEventArgs e)
         {
             if (((CheckBox)sender).IsChecked ?? false)
